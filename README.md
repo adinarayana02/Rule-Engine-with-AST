@@ -66,6 +66,7 @@ The Rule Engine with AST project is built using several key components, each ser
 
 ### Database Schema
 To effectively manage the application data, define the necessary tables in the `RuleEngineDB`. Each table serves a specific purpose, allowing for organized data management.
+
 - **Rules Table:** Stores the individual rules input by users.
 - **ASTNodes Table:** Represents the nodes of the Abstract Syntax Tree corresponding to the rules.
 - **RuleEvaluationHistory Table:** Logs the history of rule evaluations, including timestamps and results.
@@ -76,6 +77,7 @@ To effectively manage the application data, define the necessary tables in the `
 
 ### Package Dependencies and Libraries
 To manage the project’s dependencies efficiently, utilize a `requirements.txt` file. This file should list all the necessary libraries that the application needs to run correctly. Common dependencies include:
+
 - **Flask:** A lightweight web framework for building the API.
 - **Flask-SQLAlchemy:** An ORM (Object-Relational Mapping) library that simplifies interactions with the SQL database.
 - **PyODBC:** A library that enables Python to connect to SQL Server using ODBC.
