@@ -21,6 +21,7 @@ This project implements a three-tier architecture, consisting of a web interface
 ### Expected Output
 Upon evaluating user data against defined rules, the application will output whether the user qualifies according to the specified criteria.
 
+
 ## System Configuration
 
 ### Overview
