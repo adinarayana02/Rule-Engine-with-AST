@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rule Engine Application</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Apply modern typography and layout */
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background: #f0f2f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #34495e;
+        }
+
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 150px;
+        }
+
+        /* Button Styles */
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .primary-btn {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background-color: #2980b9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .secondary-btn {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .secondary-btn:hover {
+            background-color: #27ae60;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .rule-list, .output-box {
+            padding: 15px;
+            background-color: #ffffff;
+            border: 1px solid #dcdcdc;
+            border-radius: 6px;
+            min-height: 100px;
+        }
+
+        .output-box {
+            background-color: #ecf0f1;
+        }
+
+        .combine-rules {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Rule Engine Application</h1>
+        </header>
+
+        <main>
+            <section class="section">
+                <h2>Create Rule</h2>
+                <div class="form-group">
+                    <label for="ruleName">Rule Name</label>
+                    <input type="text" id="ruleName" placeholder="Enter Rule Name">
+                </div>
+                <div class="form-group">
+                    <label for="ruleString">Rule String</label>
+                    <input type="text" id="ruleString" placeholder="Enter Rule String">
+                </div>
+                <div class="form-group">
+                    <label for="ruleDescription">Rule Description</label>
+                    <textarea id="ruleDescription" placeholder="Enter Rule Description"></textarea>
+                </div>
+                <button class="primary-btn" onclick="createRule()">Add</button>
+            </section>
+
+            <section class="section">
+                <h2>Rule List</h2>
+                <div id="ruleList" class="rule-list"></div>
+            </section>
+
+            <section class="section">
+                <h2>Combine Rules</h2>
+                <div id="combineRulesSection" class="combine-rules"></div>
+                <button class="secondary-btn" onclick="combineRules()">Combine Selected Rules</button>
+            </section>
+
+            <section class="section">
+                <h2>Evaluate Rule</h2>
+                <div class="form-group">
+                    <label for="ruleSelect">Select Rule</label>
+                    <select id="ruleSelect"></select>
+                </div>
+                <h2>User Data</h2>
+                <form id="userDataForm">
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="department">Department:</label>
+                        <input type="text" id="department" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary">Salary:</label>
+                        <input type="number" id="salary" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Experience:</label>
+                        <input type="number" id="experience" required>
+                    </div>
+                    <button type="button" class="primary-btn" onclick="evaluateRule()">Evaluate Rule</button>
+                </form>
+                <h2>Result</h2>
+                <pre id="resultOutput"></pre>
+            </section>
+
+            <section class="section">
+                <h2>Output</h2>
+                <div id="output" class="output-box"></div>
+            </section>
+        </main>
+    </div>
+
+<script>
+    const API_URL = '/api';
+
+    // Function to create a new rule
+    async function createRule() {
+        const ruleName = document.getElementById('ruleName').value;
+        const ruleString = document.getElementById('ruleString').value;
+        const ruleDescription = document.getElementById('ruleDescription').value;
+
+        const response = await fetch(`${API_URL}/create_rule`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ rule_name: ruleName, rule_string: ruleString, description: ruleDescription }),
+        });
+
+        const result = await response.json();
+        document.getElementById('output').innerText = JSON.stringify(result, null, 2);
+        loadRules();  // Refresh rule list after creating a rule
+    }
+
+    // Function to load all existing rules
+    async function loadRules() {
+        const response = await fetch(`${API_URL}/get_rules`);
+        const rules = await response.json();
+
+        const ruleList = document.getElementById('ruleList');
+        const combineRulesSection = document.getElementById('combineRulesSection');
+        const ruleSelect = document.getElementById('ruleSelect');
+
+        // Clear existing rules
+        ruleList.innerHTML = '';
+        combineRulesSection.innerHTML = '';
+        ruleSelect.innerHTML = '';
+
+        rules.forEach(rule => {
+            // Add each rule to the rule list
+            const listItem = document.createElement('li');
+            listItem.textContent = `${rule.name}: ${rule.string}`;
+            ruleList.appendChild(listItem);
+
+            // Add each rule as a checkbox for combining rules
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = rule.id;
+            checkbox.id = `rule_${rule.id}`;
+
+            const label = document.createElement('label');
+            label.htmlFor = `rule_${rule.id}`;
+            label.textContent = rule.string;  // Display only rule string
+
+            const div = document.createElement('div');
+            div.appendChild(checkbox);
+            div.appendChild(label);
+
+            combineRulesSection.appendChild(div);
+
+            // Add rule to dropdown for evaluation
+            const option = document.createElement('option');
+            option.value = rule.id;
+            option.text = rule.name;
+            ruleSelect.appendChild(option);
+        });
+    }
+
+    // Function to combine selected rules
+    async function combineRules() {
+        const selectedRules = Array.from(document.querySelectorAll('.combine-rules input:checked'))
+            .map(input => input.value);
+
+        const response = await fetch(`${API_URL}/combine_rules`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ rule_ids: selectedRules }),
+        });
+
+        const result = await response.json();
+        document.getElementById('output').innerText = JSON.stringify(result, null, 2);
+    }
+
+    // Function to evaluate the selected rule based on user data
+    async function evaluateRule() {
+        const selectedRuleId = document.getElementById('ruleSelect').value;
+        const userData = {
+            age: parseInt(document.getElementById('age').value),
+            department: document.getElementById('department').value,
+            salary: parseInt(document.getElementById('salary').value),
+            experience: parseInt(document.getElementById('experience').value)
+        };
+
+        const response = await fetch(`${API_URL}/evaluate_rule`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ rule_id: selectedRuleId, data: userData }),  // Change user_data to data
+        });
+
+        const result = await response.json();
+
+        // Display the result in JSON format
+        document.getElementById('resultOutput').innerText = JSON.stringify(result, null, 2);
+
+        // Optional: Add logic to show success/error messages based on result
+        if (result.error) {
+            console.error(result.error);
+            alert(`Error: ${result.error}`);
+        } else {
+            alert('Evaluation successful! Result saved in database.');
+        }
+    }
+
+    // Load rules on page load
+    document.addEventListener('DOMContentLoaded', loadRules);
+</script>
+
+
+</body>
+</html>
